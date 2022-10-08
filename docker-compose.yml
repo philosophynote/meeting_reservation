@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - st_fastapi_net
+    environment:
+      BACKEND_HOST: backend:80
+    ports:
+      - 8080:8080
+    tty: true
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    networks:
+      - st_fastapi_net
+    ports:
+      - 80:80
+    environment:
+      APP_MODULE: server:app
+    tty: true
+
+networks:
+  st_fastapi_net:
+    driver: bridge
+
