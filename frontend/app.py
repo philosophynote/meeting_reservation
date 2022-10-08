@@ -18,6 +18,6 @@ if submit_button:
   st.write("## 送信データ")
   st.json(data)
   st.write("レスポンス結果")
-  url = "http://backend:80/users"
+  url = "http://0.0.0.0:80/users"
   res = requests.post(url, data=json.dumps(data))
   st.json(res.json())
